@@ -9,40 +9,42 @@ Detect subscriptions, unused services, and duplicate charges from user transacti
 This project is a fintech-inspired backend service that analyzes transaction data to identify spending leaks and generate intelligent alerts.
 
 It simulates real-world backend behavior with:
-- Pattern detection
-- Alert lifecycle management
-- Automated background jobs
+- Pattern detection  
+- Alert lifecycle management  
+- Automated background jobs  
 
 ---
 
 ## 🔥 Features
 
 ### 🔐 Authentication
-- JWT-based login & registration
-- Secure protected routes
+- JWT-based login & registration  
+- Secure protected routes  
 
 ### 💳 Transaction Management
-- Add and manage user transactions
-- Merchant normalization for accurate analysis
+- Add and manage user transactions  
+- Merchant normalization for accurate analysis  
 
 ### 🧠 Detection Engine
-- 📊 Subscription detection (recurring payments)
-- ⚠️ Unused subscription alerts
-- 🔁 Duplicate charge detection
+- 📊 Subscription detection (recurring payments)  
+- ⚠️ Unused subscription alerts  
+- 🔁 Duplicate charge detection  
 
 ### 🚨 Alert System
-- Persistent alerts stored in database
-- Duplicate alert prevention (idempotent logic)
-- Alert lifecycle: `ACTIVE → RESOLVED`
+- Persistent alerts stored in database  
+- Duplicate alert prevention (idempotent logic)  
+- Alert lifecycle: `ACTIVE → RESOLVED`  
 
 ### ⏱ Automation
-- Daily cron job scans transactions
-- Automatically generates alerts
-- No manual intervention required
+- Daily cron job scans transactions  
+- Automatically generates alerts  
+- No manual intervention required  
 
 ---
 
 ## 🏗️ Architecture
+
+
 Client (Postman / Frontend)
 │
 ▼
@@ -69,47 +71,50 @@ Cron Job (node-cron)
 ▼
 Automated Alert Generation
 
+
 ---
 
 ## ⚙️ Tech Stack
 
-- Node.js
-- Express.js
-- PostgreSQL
-- Prisma ORM
-- JWT Authentication
-- node-cron
+- Node.js  
+- Express.js  
+- PostgreSQL  
+- Prisma ORM  
+- JWT Authentication  
+- node-cron  
 
 ---
 
 ## 📁 Project Structure
 
+
 expense-leak-detector-api/
 src/
 ├── api/
-│   └── routes.js
+│ └── routes.js
 ├── config/
-│   ├── db.js
-│   └── env.js
+│ ├── db.js
+│ └── env.js
 ├── jobs/
-│   └── leakDetection.job.js
+│ └── leakDetection.job.js
 ├── middlewares/
-│   ├── auth.middleware.js
-│   └── error.middleware.js
+│ ├── auth.middleware.js
+│ └── error.middleware.js
 ├── modules/
-│   ├── auth/
-│   │   ├── auth.controller.js
-│   │   ├── auth.service.js
-│   │   └── auth.routes.js
-│   └── transactions/
-│       ├── transaction.controller.js
-│       ├── transaction.service.js
-│       ├── transaction.routes.js
-│       └── transaction.detection.js
+│ ├── auth/
+│ │ ├── auth.controller.js
+│ │ ├── auth.service.js
+│ │ └── auth.routes.js
+│ └── transactions/
+│ ├── transaction.controller.js
+│ ├── transaction.service.js
+│ ├── transaction.routes.js
+│ └── transaction.detection.js
 ├── utils/
-│   └── merchantNormalizer.js
+│ └── merchantNormalizer.js
 ├── app.js
 └── server.js
+
 
 ---
 
@@ -117,130 +122,127 @@ src/
 
 ### 🔐 Auth
 
-#### Register
+**Register**
+
 POST /api/auth/register
 
-#### Login
+
+**Login**
+
 POST /api/auth/login
+
 
 ---
 
 ### 💳 Transactions
 
-#### Add Transaction
-POST /api/transactions  
+**Add Transaction**
+
+POST /api/transactions
 Authorization: Bearer TOKEN
+
 
 ---
 
 ### 🧠 Detection
 
-#### Get Subscriptions
+**Get Subscriptions**
+
 GET /api/transactions/subscriptions
 
-#### Get Unused Alerts
+
+**Get Unused Alerts**
+
 GET /api/transactions/alerts/unused
 
-#### Get Duplicate Alerts
+
+**Get Duplicate Alerts**
+
 GET /api/transactions/alerts/duplicates
+
 
 ---
 
 ### 🚨 Alerts
 
-#### Generate Alerts (Manual)
+**Generate Alerts**
+
 POST /api/transactions/alerts/generate
 
-#### Get All Alerts
+
+**Get All Alerts**
+
 GET /api/transactions/alerts
 
-#### Resolve Alert
+
+**Resolve Alert**
+
 PATCH /api/transactions/alerts/:id/resolve
+
 
 ---
 
 ## 🧠 Detection Logic
 
 ### Subscription Detection
-- Groups transactions by merchant
-- Identifies recurring payments using amount & frequency
+- Groups transactions by merchant  
+- Identifies recurring payments using amount & frequency  
 
 ### Unused Detection
-- Calculates inactivity based on last transaction date
-- Triggers alert if unused for threshold days
+- Calculates inactivity based on last transaction date  
+- Triggers alert if unused for threshold days  
 
 ### Duplicate Detection
-- Detects same merchant + same amount within short time window
+- Detects same merchant + same amount within short time window  
 
 ---
 
 ## ⏱ Background Jobs
 
-- Runs daily using cron
-- Scans all users
-- Generates alerts automatically
+- Runs daily using cron  
+- Scans all users  
+- Generates alerts automatically  
 
 ---
 
 ## 🚀 Getting Started
 
 ### 1. Clone repository
-git clone https://github.com/kranthikumar-dev/expense-leak-detector-api.git  
+```bash
+git clone https://github.com/kranthikumar-dev/expense-leak-detector-api.git
 cd expense-leak-detector-api
-
----
-
-### 2. Install dependencies
+2. Install dependencies
 npm install
+3. Setup environment variables
 
----
+Create a .env file:
 
-### 3. Setup environment variables
-
-Create `.env` file:
-
-DATABASE_URL=postgresql://postgres:password@localhost:5432/expense_db  
-JWT_SECRET=your_secret_key  
-PORT=8000  
-
----
-
-### 4. Run database migrations
+DATABASE_URL=postgresql://postgres:password@localhost:5432/expense_db
+JWT_SECRET=your_secret_key
+PORT=8000
+4. Run database migrations
 npx prisma migrate dev
-
----
-
-### 5. Start server
+5. Start server
 npm run dev
-
----
-
-## 💣 Why This Project Stands Out
+💣 Why This Project Stands Out
 
 Most backend projects:
-- Basic CRUD APIs ❌
+
+Basic CRUD APIs ❌
 
 This project:
-- Data → Pattern Detection → Alerts → Automation → Lifecycle Management ✅
 
----
+Data → Pattern Detection → Alerts → Automation → Lifecycle Management ✅
+📌 Future Improvements
+📊 Analytics dashboard
+🔔 Real-time notifications
+📈 Spending insights
+🤖 ML-based anomaly detection
+👨‍💻 Author
 
-## 📌 Future Improvements
-
-- 📊 Analytics dashboard (frontend)
-- 🔔 Real-time notifications
-- 📈 Spending insights
-- 🤖 ML-based anomaly detection
-
----
-
-## 👨‍💻 Author
-
-**Kranthi Kumar**  
+Kranthi Kumar
 Backend Developer (Node.js | PostgreSQL | APIs)
 
----
-
-## ⭐ Show Your Support
+⭐ Show Your Support
 
 If you found this project useful, consider giving it a ⭐ on GitHub!
