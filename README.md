@@ -9,9 +9,9 @@ Detect subscriptions, unused services, and duplicate charges from user transacti
 This project is a fintech-inspired backend service that analyzes transaction data to identify spending leaks and generate intelligent alerts.
 
 It simulates real-world backend behavior with:
-- pattern detection
-- alert lifecycle management
-- automated background jobs
+- Pattern detection
+- Alert lifecycle management
+- Automated background jobs
 
 ---
 
@@ -43,8 +43,6 @@ It simulates real-world backend behavior with:
 ---
 
 ## 🏗️ Architecture
-
-
 Client (Postman / Frontend)
 │
 ▼
@@ -71,7 +69,6 @@ Cron Job (node-cron)
 ▼
 Automated Alert Generation
 
-
 ---
 
 ## ⚙️ Tech Stack
@@ -87,22 +84,32 @@ Automated Alert Generation
 
 ## 📁 Project Structure
 
-
+expense-leak-detector-api/
 src/
+├── api/
+│   └── routes.js
 ├── config/
-│ ├── db.js
-│ └── env.js
-├── modules/
-│ ├── auth/
-│ └── transactions/
-├── services/
-│ └── detection.service.js
+│   ├── db.js
+│   └── env.js
 ├── jobs/
-│ └── leakDetection.job.js
+│   └── leakDetection.job.js
 ├── middlewares/
-│ └── auth.middleware.js
+│   ├── auth.middleware.js
+│   └── error.middleware.js
+├── modules/
+│   ├── auth/
+│   │   ├── auth.controller.js
+│   │   ├── auth.service.js
+│   │   └── auth.routes.js
+│   └── transactions/
+│       ├── transaction.controller.js
+│       ├── transaction.service.js
+│       ├── transaction.routes.js
+│       └── transaction.detection.js
+├── utils/
+│   └── merchantNormalizer.js
+├── app.js
 └── server.js
-
 
 ---
 
@@ -111,62 +118,44 @@ src/
 ### 🔐 Auth
 
 #### Register
-
 POST /api/auth/register
 
-
 #### Login
-
 POST /api/auth/login
-
 
 ---
 
 ### 💳 Transactions
 
 #### Add Transaction
-
-POST /api/transactions
+POST /api/transactions  
 Authorization: Bearer TOKEN
-
 
 ---
 
 ### 🧠 Detection
 
 #### Get Subscriptions
-
 GET /api/transactions/subscriptions
 
-
 #### Get Unused Alerts
-
 GET /api/transactions/alerts/unused
 
-
 #### Get Duplicate Alerts
-
 GET /api/transactions/alerts/duplicates
-
 
 ---
 
 ### 🚨 Alerts
 
 #### Generate Alerts (Manual)
-
 POST /api/transactions/alerts/generate
 
-
 #### Get All Alerts
-
 GET /api/transactions/alerts
 
-
 #### Resolve Alert
-
 PATCH /api/transactions/alerts/:id/resolve
-
 
 ---
 
@@ -196,41 +185,62 @@ PATCH /api/transactions/alerts/:id/resolve
 ## 🚀 Getting Started
 
 ### 1. Clone repository
-```bash
-git clone https://github.com/kranthikumar-dev/expense-leak-detector-api.git
+git clone https://github.com/kranthikumar-dev/expense-leak-detector-api.git  
 cd expense-leak-detector-api
-2. Install dependencies
+
+---
+
+### 2. Install dependencies
 npm install
-3. Setup environment variables
 
-Create .env file:
+---
 
-DATABASE_URL=postgresql://postgres:password@localhost:5432/expense_db
-JWT_SECRET=your_secret_key
-PORT=8000
-4. Run database migrations
+### 3. Setup environment variables
+
+Create `.env` file:
+
+DATABASE_URL=postgresql://postgres:password@localhost:5432/expense_db  
+JWT_SECRET=your_secret_key  
+PORT=8000  
+
+---
+
+### 4. Run database migrations
 npx prisma migrate dev
-5. Start server
+
+---
+
+### 5. Start server
 npm run dev
-💣 Why This Project Stands Out
+
+---
+
+## 💣 Why This Project Stands Out
 
 Most backend projects:
-
-Basic CRUD APIs ❌
+- Basic CRUD APIs ❌
 
 This project:
+- Data → Pattern Detection → Alerts → Automation → Lifecycle Management ✅
 
-Data → Pattern Detection → Alerts → Automation → Lifecycle Management ✅
-📌 Future Improvements
-📊 Analytics dashboard (frontend)
-🔔 Real-time notifications
-📈 Spending insights
-🤖 ML-based anomaly detection
-👨‍💻 Author
+---
 
-Kranthi Kumar
+## 📌 Future Improvements
+
+- 📊 Analytics dashboard (frontend)
+- 🔔 Real-time notifications
+- 📈 Spending insights
+- 🤖 ML-based anomaly detection
+
+---
+
+## 👨‍💻 Author
+
+**Kranthi Kumar**  
 Backend Developer (Node.js | PostgreSQL | APIs)
 
-⭐ Show Your Support
+---
+
+## ⭐ Show Your Support
 
 If you found this project useful, consider giving it a ⭐ on GitHub!
